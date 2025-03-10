@@ -1,35 +1,28 @@
 import { DateTime } from 'luxon';
-
-import { InvalidInputError } from '@/utils/errors';
 import {
   isNumber,
   isString,
   typeGuardGenerator,
   typeGuardTestGenerator,
 } from 'tcheck';
-import { Frequency, frequencyFromString, isFrequency } from '@/utils/types';
-import { isValidDateTimeString } from '@/utils/type_guard';
+
+import { InvalidInputError } from '../utils/errors';
+import { Frequency, frequencyFromString, isFrequency } from './frequency';
+import { isValidDateTimeString } from '../utils/type_guards';
+import { Task, TaskJSON } from './task';
 
 export interface TaskDepositJSON {
   id: string;
-  vbUserId: string;
+  userId: string;
   date: string;
-  taskName: string;
-  taskId: string;
-  conversionRate: number;
-  frequency: string;
-  tokensEarned: number;
+  task: TaskJSON;
 }
 
 const isTaskDepositJSONCommon = {
   id: isString,
-  vbUserId: isString,
+  userId: isString,
   date: isValidDateTimeString,
-  taskName: isString,
-  taskId: isString,
-  conversionRate: isNumber,
-  frequency: isFrequency,
-  tokensEarned: isNumber,
+  task: Task.isTaskJSON,
 };
 
 const isTaskDepositJSON = typeGuardGenerator<TaskDepositJSON>(
@@ -38,67 +31,42 @@ const isTaskDepositJSON = typeGuardGenerator<TaskDepositJSON>(
 const isTaskDepositJSONTest = typeGuardTestGenerator(isTaskDepositJSONCommon);
 
 export class TaskDeposit {
-  constructor(
-    protected _id: string,
-    protected _vbUserId: string,
-    protected _date: DateTime<true>,
-    protected _taskName: string,
-    protected _taskId: string,
-    protected _conversionRate: number,
-    protected _frequency: Frequency,
-    protected _tokensEarned: number,
-  ) {}
+  protected _id: string;
+  protected _userId: string;
+  protected _date: DateTime<true>;
+  protected _task: Task;
+
+  constructor(input: TaskDepositJSON) {
+    const date = DateTime.fromISO(input.date);
+    if (!date.isValid) {
+      throw new InvalidInputError('Invalid date');
+    }
+    this._date = date;
+    this._id = input.id;
+    this._userId = input.userId;
+    this._task = new Task(input.task);
+  }
 
   get id(): string {
     return this._id;
   }
-
-  get vbUserId(): string {
-    return this._vbUserId;
+  get userId(): string {
+    return this._userId;
   }
-
   get date(): DateTime<true> {
     return this._date;
   }
-
-  get taskName(): string {
-    return this._taskName;
-  }
-
-  get taskId(): string {
-    return this._taskId;
-  }
-
-  get conversionRate(): number {
-    return this._conversionRate;
-  }
-
-  get frequency(): Frequency {
-    return this._frequency;
-  }
-
-  get tokensEarned(): number {
-    return this._tokensEarned;
+  get task() {
+    return this._task;
   }
 
   toJSON(): TaskDepositJSON {
     return {
       id: this.id,
-      vbUserId: this.vbUserId,
+      userId: this.userId,
       date: this.date.toISO(),
-      taskName: this.taskName,
-      taskId: this.taskId,
-      conversionRate: this.conversionRate,
-      frequency: this.frequency,
-      tokensEarned: this.tokensEarned,
+      task: this.task.toJSON(),
     };
-  }
-
-  withTokensEarned(tokensEarned: number): TaskDeposit {
-    return TaskDeposit.fromJSON({
-      ...this.toJSON(),
-      tokensEarned,
-    });
   }
 
   static fromJSON(input: unknown): TaskDeposit {
@@ -107,31 +75,16 @@ export class TaskDeposit {
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
-    const dateTime = DateTime.fromISO(input.date, { zone: 'America/Chicago' });
-    if (!dateTime.isValid) {
-      throw new InvalidInputError('Invalid date');
-    }
-
-    return new TaskDeposit(
-      input.id,
-      input.vbUserId,
-      dateTime,
-      input.taskName,
-      input.taskId,
-      input.conversionRate,
-      frequencyFromString(input.frequency),
-      input.tokensEarned,
-    );
+    return new TaskDeposit(input);
   }
 
-  static isTaskDepositJSON = isTaskDepositJSON;
-
-  static TaskDepositJSONTest = isTaskDepositJSONTest;
-
   static fromNewTaskDeposit(id: string, taskDeposit: TaskDeposit): TaskDeposit {
-    return TaskDeposit.fromJSON({
+    return new TaskDeposit({
       ...taskDeposit.toJSON(),
       id,
     });
   }
+
+  static isTaskDepositJSON = isTaskDepositJSON;
+  static TaskDepositJSONTest = isTaskDepositJSONTest;
 }

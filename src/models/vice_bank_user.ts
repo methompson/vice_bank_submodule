@@ -1,4 +1,4 @@
-import { InvalidInputError } from '@/utils/errors';
+import { InvalidInputError } from '../utils/errors';
 import {
   isNumber,
   isString,

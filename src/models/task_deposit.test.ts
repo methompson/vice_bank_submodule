@@ -1,15 +1,20 @@
+import { TaskJSON } from './task';
 import { TaskDeposit, TaskDepositJSON } from './task_deposit';
 
 describe('TaskDeposit', () => {
+  const taskJSON: TaskJSON = {
+    id: 'id',
+    userId: 'userid',
+    name: 'name',
+    frequency: 'daily',
+    tokensEarnedPerInput: 1,
+  };
+
   const validInput: TaskDepositJSON = {
     id: 'id',
-    vbUserId: 'vbUserId',
+    userId: 'userId',
     date: '2024-03-19T00:00:00.000-05:00',
-    taskName: 'taskName',
-    taskId: 'taskId',
-    conversionRate: 1,
-    frequency: 'daily',
-    tokensEarned: 1,
+    task: taskJSON,
   };
 
   describe('toJSON', () => {
@@ -20,38 +25,15 @@ describe('TaskDeposit', () => {
     });
   });
 
-  describe('withTokensEarned', () => {
-    test('creates a new object with tokensEarned set to a value', () => {
-      const deposit = TaskDeposit.fromJSON(validInput);
-
-      const newDeposit = deposit.withTokensEarned(2);
-
-      expect(deposit).not.toBe(newDeposit);
-      expect(newDeposit.tokensEarned).toBe(2);
-      expect(deposit.tokensEarned).toBe(1);
-    });
-
-    test('creates a new object even if the tokensEarned values are the same', () => {
-      const deposit = TaskDeposit.fromJSON(validInput);
-
-      const newDeposit = deposit.withTokensEarned(deposit.tokensEarned);
-
-      expect(deposit).not.toBe(newDeposit);
-      expect(deposit.toJSON()).toEqual(newDeposit.toJSON());
-    });
-  });
-
   describe('fromJSON', () => {
     test('returns a new Task based on valid input', () => {
       const taskDeposit = TaskDeposit.fromJSON(validInput);
 
       expect(taskDeposit).toBeInstanceOf(TaskDeposit);
       expect(taskDeposit.id).toBe(validInput.id);
-      expect(taskDeposit.vbUserId).toBe(validInput.vbUserId);
+      expect(taskDeposit.userId).toBe(validInput.userId);
       expect(taskDeposit.date.toISO()).toBe(validInput.date);
-      expect(taskDeposit.taskName).toBe(validInput.taskName);
-      expect(taskDeposit.taskId).toBe(validInput.taskId);
-      expect(taskDeposit.tokensEarned).toBe(validInput.tokensEarned);
+      expect(taskDeposit.task.toJSON()).toEqual(taskJSON);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -62,7 +44,7 @@ describe('TaskDeposit', () => {
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
+      delete invalidInput.userId;
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -70,15 +52,7 @@ describe('TaskDeposit', () => {
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.taskName;
-      expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
-
-      invalidInput = { ...validInput };
-      delete invalidInput.taskId;
-      expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
-
-      invalidInput = { ...validInput };
-      delete invalidInput.tokensEarned;
+      delete invalidInput.task;
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
     });
 
@@ -106,7 +80,7 @@ describe('TaskDeposit', () => {
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
+      delete invalidInput.userId;
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -114,15 +88,7 @@ describe('TaskDeposit', () => {
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.taskName;
-      expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.taskId;
-      expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.tokensEarned;
+      delete invalidInput.task;
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
     });
 
@@ -150,30 +116,16 @@ describe('TaskDeposit', () => {
       expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual([
-        'vbUserId',
-      ]);
+      delete invalidInput.userId;
+      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['userId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
       expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['date']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.taskName;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual([
-        'taskName',
-      ]);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.taskId;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['taskId']);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.tokensEarned;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual([
-        'tokensEarned',
-      ]);
+      delete invalidInput.task;
+      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['task']);
     });
 
     test('returns root if the input is not an object', () => {

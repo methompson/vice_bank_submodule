@@ -1,8 +1,5 @@
 import { isEnumValueGenerator } from 'tcheck';
 
-import { Deposit } from '../models/deposit';
-import { TaskDeposit } from '../models/task_deposit';
-
 export enum Frequency {
   Daily = 'daily',
   Weekly = 'weekly',

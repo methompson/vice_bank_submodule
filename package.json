@@ -2,7 +2,7 @@
   "name": "vice_bank_types",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest ./src"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "luxon": "^3.5.0",
-    "tcheck": "^1.2.3"
+    "tcheck": "^1.2.5"
   }
 }

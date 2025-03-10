@@ -1,14 +1,20 @@
 import { Purchase, PurchaseJSON } from './purchase';
+import { PurchasePriceJSON } from './purchase_price';
 
 describe('Purchase', () => {
+  const purchasePrice: PurchasePriceJSON = {
+    id: 'id',
+    userId: 'userId',
+    name: 'name',
+    price: 1,
+  };
+
   const validInput: PurchaseJSON = {
     id: 'id',
-    vbUserId: 'vbUserId',
-    purchasePriceId: 'purchasePriceId',
-    purchasedName: 'purchasedName',
+    userId: 'userId',
     date: '2023-02-25T00:00:00.000-06:00',
     purchasedQuantity: 1,
-    tokensSpent: 1,
+    purchasePrice: purchasePrice,
   };
 
   describe('toJSON', () => {
@@ -26,10 +32,10 @@ describe('Purchase', () => {
       const result = Purchase.fromJSON(validInput);
       expect(result instanceof Purchase).toBe(true);
       expect(result.id).toBe('id');
-      expect(result.vbUserId).toBe('vbUserId');
-      expect(result.purchasePriceId).toBe('purchasePriceId');
+      expect(result.userId).toBe('userId');
       expect(result.date.toISO()).toBe('2023-02-25T00:00:00.000-06:00');
       expect(result.purchasedQuantity).toBe(1);
+      expect(result.purchasePrice.toJSON()).toEqual(purchasePrice);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -40,11 +46,7 @@ describe('Purchase', () => {
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
-      expect(() => Purchase.fromJSON(invalidInput)).toThrow();
-
-      invalidInput = { ...validInput };
-      delete invalidInput.purchasePriceId;
+      delete invalidInput.userId;
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -53,6 +55,10 @@ describe('Purchase', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.purchasedQuantity;
+      expect(() => Purchase.fromJSON(invalidInput)).toThrow();
+
+      invalidInput = { ...validInput };
+      delete invalidInput.purchasePrice;
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
     });
 
@@ -78,11 +84,7 @@ describe('Purchase', () => {
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
-      expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.purchasePriceId;
+      delete invalidInput.userId;
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -91,6 +93,10 @@ describe('Purchase', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.purchasedQuantity;
+      expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
+
+      invalidInput = { ...validInput };
+      delete invalidInput.purchasePrice;
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
     });
 
@@ -116,14 +122,8 @@ describe('Purchase', () => {
       expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.vbUserId;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['vbUserId']);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.purchasePriceId;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual([
-        'purchasePriceId',
-      ]);
+      delete invalidInput.userId;
+      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['userId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
@@ -133,6 +133,12 @@ describe('Purchase', () => {
       delete invalidInput.purchasedQuantity;
       expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual([
         'purchasedQuantity',
+      ]);
+
+      invalidInput = { ...validInput };
+      delete invalidInput.purchasePrice;
+      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual([
+        'purchasePrice',
       ]);
     });
 
@@ -153,10 +159,10 @@ describe('Purchase', () => {
 
       expect(result instanceof Purchase).toBe(true);
       expect(result.id).toBe(newId);
-      expect(result.vbUserId).toBe(purchaseInput.vbUserId);
-      expect(result.purchasePriceId).toBe(purchaseInput.purchasePriceId);
+      expect(result.userId).toBe(purchaseInput.userId);
       expect(result.date.toISO()).toBe(purchaseInput.date.toISO());
       expect(result.purchasedQuantity).toBe(purchaseInput.purchasedQuantity);
+      expect(result.purchasePrice.toJSON()).toEqual(purchasePrice);
     });
   });
 });
