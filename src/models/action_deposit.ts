@@ -10,7 +10,7 @@ import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
 import { Action, ActionJSON } from './action';
 
-export interface DepositJSON {
+export interface ActionDepositJSON {
   id: string;
   userId: string;
   date: string;
@@ -18,7 +18,7 @@ export interface DepositJSON {
   action: ActionJSON;
 }
 
-const isDepositJSONCommon = {
+const isActionDepositJSONCommon = {
   id: isString,
   userId: isString,
   date: isValidDateTimeString,
@@ -26,17 +26,21 @@ const isDepositJSONCommon = {
   action: Action.isActionJSON,
 };
 
-const isDepositJSON = typeGuardGenerator<DepositJSON>(isDepositJSONCommon);
-const isDepositJSONTest = typeGuardTestGenerator(isDepositJSONCommon);
+const isActionDepositJSON = typeGuardGenerator<ActionDepositJSON>(
+  isActionDepositJSONCommon,
+);
+const isActionDepositJSONTest = typeGuardTestGenerator(
+  isActionDepositJSONCommon,
+);
 
-export class Deposit {
+export class ActionDeposit {
   protected _id: string;
   protected _userId: string;
   protected _date: DateTime<true>;
   protected _depositQuantity: number;
   protected _action: Action;
 
-  constructor(input: DepositJSON) {
+  constructor(input: ActionDepositJSON) {
     const date = DateTime.fromISO(input.date);
     if (!date.isValid) {
       throw new InvalidInputError('Invalid date');
@@ -64,7 +68,7 @@ export class Deposit {
     return this._action;
   }
 
-  toJSON(): DepositJSON {
+  toJSON(): ActionDepositJSON {
     return {
       id: this.id,
       userId: this.userId,
@@ -74,16 +78,16 @@ export class Deposit {
     };
   }
 
-  copyWith(input: Record<string, unknown>): Deposit {
-    return Deposit.fromJSON({
+  copyWith(input: Record<string, unknown>): ActionDeposit {
+    return ActionDeposit.fromJSON({
       ...this.toJSON(),
       ...input,
     });
   }
 
-  static fromJSON(input: unknown): Deposit {
-    if (!Deposit.isDepositJSON(input)) {
-      const errors = Deposit.DepositJSONTest(input);
+  static fromJSON(input: unknown): ActionDeposit {
+    if (!ActionDeposit.isDepositJSON(input)) {
+      const errors = ActionDeposit.DepositJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -92,17 +96,17 @@ export class Deposit {
       throw new InvalidInputError('Invalid date');
     }
 
-    return new Deposit(input);
+    return new ActionDeposit(input);
   }
 
-  static fromNewDeposit(id: string, input: Deposit): Deposit {
-    return new Deposit({
+  static fromActionNewDeposit(id: string, input: ActionDeposit): ActionDeposit {
+    return new ActionDeposit({
       ...input.toJSON(),
       id,
     });
   }
 
-  static isDepositJSON = isDepositJSON;
+  static isDepositJSON = isActionDepositJSON;
 
-  static DepositJSONTest = isDepositJSONTest;
+  static DepositJSONTest = isActionDepositJSONTest;
 }

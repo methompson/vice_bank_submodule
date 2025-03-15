@@ -1,5 +1,5 @@
 import { ActionJSON } from './action';
-import { Deposit, DepositJSON } from './deposit';
+import { ActionDeposit, ActionDepositJSON } from './action_deposit';
 
 describe('Deposit', () => {
   const action: ActionJSON = {
@@ -13,7 +13,7 @@ describe('Deposit', () => {
     maxDeposit: 4,
   };
 
-  const validInput: DepositJSON = {
+  const validInput: ActionDepositJSON = {
     id: 'id',
     userId: 'userId',
     date: '2023-02-25T00:00:00.000-06:00',
@@ -23,7 +23,7 @@ describe('Deposit', () => {
 
   describe('toJSON', () => {
     test('returns an expected value', () => {
-      const deposit = Deposit.fromJSON(validInput);
+      const deposit = ActionDeposit.fromJSON(validInput);
 
       const result = deposit.toJSON();
 
@@ -33,8 +33,8 @@ describe('Deposit', () => {
 
   describe('fromJSON', () => {
     test('returns a new Deposit based on valid input', () => {
-      const result = Deposit.fromJSON(validInput);
-      expect(result instanceof Deposit).toBe(true);
+      const result = ActionDeposit.fromJSON(validInput);
+      expect(result instanceof ActionDeposit).toBe(true);
       expect(result.id).toBe(validInput.id);
       expect(result.userId).toBe(validInput.userId);
       expect(result.date.toISO()).toBe(validInput.date);
@@ -47,37 +47,37 @@ describe('Deposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(() => Deposit.fromJSON(invalidInput)).toThrow();
+      expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
       delete invalidInput.userId;
-      expect(() => Deposit.fromJSON(invalidInput)).toThrow();
+      expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(() => Deposit.fromJSON(invalidInput)).toThrow();
+      expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
       delete invalidInput.depositQuantity;
-      expect(() => Deposit.fromJSON(invalidInput)).toThrow();
+      expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
       delete invalidInput.action;
-      expect(() => Deposit.fromJSON(invalidInput)).toThrow();
+      expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
     });
 
     test('throws an error if the input is not an object', () => {
-      expect(() => Deposit.fromJSON('invalidInput')).toThrow();
-      expect(() => Deposit.fromJSON(1)).toThrow();
-      expect(() => Deposit.fromJSON(true)).toThrow();
-      expect(() => Deposit.fromJSON([])).toThrow();
-      expect(() => Deposit.fromJSON(null)).toThrow();
+      expect(() => ActionDeposit.fromJSON('invalidInput')).toThrow();
+      expect(() => ActionDeposit.fromJSON(1)).toThrow();
+      expect(() => ActionDeposit.fromJSON(true)).toThrow();
+      expect(() => ActionDeposit.fromJSON([])).toThrow();
+      expect(() => ActionDeposit.fromJSON(null)).toThrow();
     });
   });
 
   describe('isDepositJSON', () => {
     test('returns true if the input is valid', () => {
-      expect(Deposit.isDepositJSON(validInput)).toBe(true);
+      expect(ActionDeposit.isDepositJSON(validInput)).toBe(true);
     });
 
     test('returns false if the input is missing any value from a valid input', () => {
@@ -85,37 +85,37 @@ describe('Deposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Deposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.userId;
-      expect(Deposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(Deposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.depositQuantity;
-      expect(Deposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.action;
-      expect(Deposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
     });
 
     test('returns false if the input is not an object', () => {
-      expect(Deposit.isDepositJSON('invalidInput')).toBe(false);
-      expect(Deposit.isDepositJSON(1)).toBe(false);
-      expect(Deposit.isDepositJSON(true)).toBe(false);
-      expect(Deposit.isDepositJSON([])).toBe(false);
-      expect(Deposit.isDepositJSON(null)).toBe(false);
+      expect(ActionDeposit.isDepositJSON('invalidInput')).toBe(false);
+      expect(ActionDeposit.isDepositJSON(1)).toBe(false);
+      expect(ActionDeposit.isDepositJSON(true)).toBe(false);
+      expect(ActionDeposit.isDepositJSON([])).toBe(false);
+      expect(ActionDeposit.isDepositJSON(null)).toBe(false);
     });
   });
 
   describe('DepositJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(Deposit.DepositJSONTest(validInput)).toEqual([]);
+      expect(ActionDeposit.DepositJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -123,43 +123,43 @@ describe('Deposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Deposit.DepositJSONTest(invalidInput)).toEqual(['id']);
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.userId;
-      expect(Deposit.DepositJSONTest(invalidInput)).toEqual(['userId']);
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['userId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(Deposit.DepositJSONTest(invalidInput)).toEqual(['date']);
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['date']);
 
       invalidInput = { ...validInput };
       delete invalidInput.depositQuantity;
-      expect(Deposit.DepositJSONTest(invalidInput)).toEqual([
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual([
         'depositQuantity',
       ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.action;
-      expect(Deposit.DepositJSONTest(invalidInput)).toEqual(['action']);
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['action']);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(Deposit.DepositJSONTest('invalidInput')).toEqual(['root']);
-      expect(Deposit.DepositJSONTest(1)).toEqual(['root']);
-      expect(Deposit.DepositJSONTest(true)).toEqual(['root']);
-      expect(Deposit.DepositJSONTest([])).toEqual(['root']);
-      expect(Deposit.DepositJSONTest(null)).toEqual(['root']);
+      expect(ActionDeposit.DepositJSONTest('invalidInput')).toEqual(['root']);
+      expect(ActionDeposit.DepositJSONTest(1)).toEqual(['root']);
+      expect(ActionDeposit.DepositJSONTest(true)).toEqual(['root']);
+      expect(ActionDeposit.DepositJSONTest([])).toEqual(['root']);
+      expect(ActionDeposit.DepositJSONTest(null)).toEqual(['root']);
     });
   });
 
   describe('fromNewDeposit', () => {
     test('returns a new Deposit based on valid input', () => {
-      const depositInput = Deposit.fromJSON(validInput);
+      const depositInput = ActionDeposit.fromJSON(validInput);
       const newId = 'newId';
-      const result = Deposit.fromNewDeposit(newId, depositInput);
+      const result = ActionDeposit.fromActionNewDeposit(newId, depositInput);
 
-      expect(result instanceof Deposit).toBe(true);
+      expect(result instanceof ActionDeposit).toBe(true);
       expect(result.id).toBe(newId);
       expect(result.userId).toBe(depositInput.userId);
       expect(result.date.toISO()).toBe(depositInput.date.toISO());
