@@ -8,14 +8,14 @@ import {
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
-import { PurchasePrice, PurchasePriceJSON } from './purchase_price';
+import { Reward, RewardJSON } from './reward';
 
 export interface PurchaseJSON {
   id: string;
   userId: string;
   date: string;
   purchasedQuantity: number;
-  purchasePrice: PurchasePriceJSON;
+  reward: RewardJSON;
 }
 
 const isPurchaseJSONCommon = {
@@ -23,7 +23,7 @@ const isPurchaseJSONCommon = {
   userId: isString,
   date: isValidDateTimeString,
   purchasedQuantity: isNumber,
-  purchasePrice: PurchasePrice.isPurchasePriceJSON,
+  reward: Reward.isRewardJSON,
 };
 
 const isPurchaseJSON = typeGuardGenerator<PurchaseJSON>(isPurchaseJSONCommon);
@@ -34,7 +34,7 @@ export class Purchase {
   protected _userId: string;
   protected _date: DateTime<true>;
   protected _purchasedQuantity: number;
-  protected _purchasePrice: PurchasePrice;
+  protected _reward: Reward;
 
   constructor(input: PurchaseJSON) {
     const date = DateTime.fromISO(input.date);
@@ -45,7 +45,7 @@ export class Purchase {
     this._id = input.id;
     this._userId = input.userId;
     this._purchasedQuantity = input.purchasedQuantity;
-    this._purchasePrice = new PurchasePrice(input.purchasePrice);
+    this._reward = new Reward(input.reward);
   }
 
   get id(): string {
@@ -60,8 +60,8 @@ export class Purchase {
   get purchasedQuantity(): number {
     return this._purchasedQuantity;
   }
-  get purchasePrice() {
-    return this._purchasePrice;
+  get reward() {
+    return this._reward;
   }
 
   toJSON(): PurchaseJSON {
@@ -70,7 +70,7 @@ export class Purchase {
       userId: this.userId,
       date: this.date.toISO(),
       purchasedQuantity: this.purchasedQuantity,
-      purchasePrice: this.purchasePrice.toJSON(),
+      reward: this.reward.toJSON(),
     };
   }
 

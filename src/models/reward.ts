@@ -7,34 +7,30 @@ import {
 
 import { InvalidInputError } from '../utils/errors';
 
-export interface PurchasePriceJSON {
+export interface RewardJSON {
   id: string;
   userId: string;
   name: string;
   price: number;
 }
 
-const isPurchasePriceJSONCommon = {
+const isRewardJSONCommon = {
   id: isString,
   userId: isString,
   name: isString,
   price: isNumber,
 };
 
-const isPurchasePriceJSON = typeGuardGenerator<PurchasePriceJSON>(
-  isPurchasePriceJSONCommon,
-);
-const isPurchasePriceJSONTest = typeGuardTestGenerator(
-  isPurchasePriceJSONCommon,
-);
+const isRewardJSON = typeGuardGenerator<RewardJSON>(isRewardJSONCommon);
+const isRewardJSONTest = typeGuardTestGenerator(isRewardJSONCommon);
 
-export class PurchasePrice {
+export class Reward {
   protected _id: string;
   protected _userId: string;
   protected _name: string;
   protected _price: number;
 
-  constructor(input: PurchasePriceJSON) {
+  constructor(input: RewardJSON) {
     this._id = input.id;
     this._userId = input.userId;
     this._name = input.name;
@@ -54,7 +50,7 @@ export class PurchasePrice {
     return this._price;
   }
 
-  toJSON(): PurchasePriceJSON {
+  toJSON(): RewardJSON {
     return {
       id: this.id,
       userId: this.userId,
@@ -63,24 +59,21 @@ export class PurchasePrice {
     };
   }
 
-  static fromJSON(input: unknown): PurchasePrice {
-    if (!PurchasePrice.isPurchasePriceJSON(input)) {
-      const errors = PurchasePrice.PurchasePriceJSONTest(input);
+  static fromJSON(input: unknown): Reward {
+    if (!Reward.isRewardJSON(input)) {
+      const errors = Reward.isRewardJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
-    return new PurchasePrice(input);
+    return new Reward(input);
   }
 
-  static isPurchasePriceJSON = isPurchasePriceJSON;
-  static PurchasePriceJSONTest = isPurchasePriceJSONTest;
+  static isRewardJSON = isRewardJSON;
+  static isRewardJSONTest = isRewardJSONTest;
 
-  static fromNewPurchasePrice(
-    id: string,
-    purchasePrice: PurchasePrice,
-  ): PurchasePrice {
-    return new PurchasePrice({
-      ...purchasePrice.toJSON(),
+  static fromNewReward(id: string, reward: Reward): Reward {
+    return new Reward({
+      ...reward.toJSON(),
       id,
     });
   }

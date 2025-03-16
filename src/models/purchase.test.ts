@@ -1,8 +1,8 @@
 import { Purchase, PurchaseJSON } from './purchase';
-import { PurchasePriceJSON } from './purchase_price';
+import { RewardJSON } from './reward';
 
 describe('Purchase', () => {
-  const purchasePrice: PurchasePriceJSON = {
+  const purchasePrice: RewardJSON = {
     id: 'id',
     userId: 'userId',
     name: 'name',
@@ -14,7 +14,7 @@ describe('Purchase', () => {
     userId: 'userId',
     date: '2023-02-25T00:00:00.000-06:00',
     purchasedQuantity: 1,
-    purchasePrice: purchasePrice,
+    reward: purchasePrice,
   };
 
   describe('toJSON', () => {
@@ -35,7 +35,7 @@ describe('Purchase', () => {
       expect(result.userId).toBe('userId');
       expect(result.date.toISO()).toBe('2023-02-25T00:00:00.000-06:00');
       expect(result.purchasedQuantity).toBe(1);
-      expect(result.purchasePrice.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(purchasePrice);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -58,7 +58,7 @@ describe('Purchase', () => {
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.purchasePrice;
+      delete invalidInput.reward;
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
     });
 
@@ -96,7 +96,7 @@ describe('Purchase', () => {
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.purchasePrice;
+      delete invalidInput.reward;
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
     });
 
@@ -136,10 +136,8 @@ describe('Purchase', () => {
       ]);
 
       invalidInput = { ...validInput };
-      delete invalidInput.purchasePrice;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual([
-        'purchasePrice',
-      ]);
+      delete invalidInput.reward;
+      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['reward']);
     });
 
     test('returns root if the input is not an object', () => {
@@ -162,7 +160,7 @@ describe('Purchase', () => {
       expect(result.userId).toBe(purchaseInput.userId);
       expect(result.date.toISO()).toBe(purchaseInput.date.toISO());
       expect(result.purchasedQuantity).toBe(purchaseInput.purchasedQuantity);
-      expect(result.purchasePrice.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(purchasePrice);
     });
   });
 });

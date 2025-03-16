@@ -8,7 +8,7 @@ export enum Frequency {
 
 export const isFrequency = isEnumValueGenerator(Frequency);
 
-export function frequencyFromString(input: string) {
+export function frequencyFromString(input: string): Frequency {
   if (isFrequency(input)) {
     return input;
   } else {
