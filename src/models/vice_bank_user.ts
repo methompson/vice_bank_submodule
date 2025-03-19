@@ -25,12 +25,17 @@ const isViceBankUserJSON = typeGuardGenerator<ViceBankUserJSON>(
 const isViceBankUserJSONTest = typeGuardTestGenerator(isViceBankUserJSONCommon);
 
 export class ViceBankUser {
-  constructor(
-    protected _id: string,
-    protected _userId: string,
-    protected _name: string,
-    protected _currentTokens: number,
-  ) {}
+  protected _id: string;
+  protected _userId: string;
+  protected _name: string;
+  protected _currentTokens: number;
+
+  constructor(payload: ViceBankUserJSON) {
+    this._id = payload.id;
+    this._userId = payload.userId;
+    this._name = payload.name;
+    this._currentTokens = payload.currentTokens;
+  }
 
   get id(): string {
     return this._id;
@@ -67,12 +72,7 @@ export class ViceBankUser {
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
-    return new ViceBankUser(
-      input.id,
-      input.userId,
-      input.name,
-      input.currentTokens,
-    );
+    return new ViceBankUser(input);
   }
 
   static isViceBankUserJSON = isViceBankUserJSON;
