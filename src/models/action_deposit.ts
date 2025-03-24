@@ -69,7 +69,11 @@ export class ActionDeposit {
   }
 
   get tokensEarned(): number {
-    return this._depositQuantity * this._action.conversionRate;
+    const quant =
+      this.action.maxDeposit > this._depositQuantity
+        ? this.action.maxDeposit
+        : this._depositQuantity;
+    return quant * this._action.conversionRate;
   }
 
   toJSON(): ActionDepositJSON {
