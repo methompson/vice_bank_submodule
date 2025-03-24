@@ -65,7 +65,9 @@ export class Action {
   // How many tokens you earn from the above input quantity
   protected _tokensEarnedPerInput: number;
   protected _minDeposit: number;
-  protected _maxDeposit?: number;
+  protected _maxDeposit: undefined | number;
+
+  test: number | undefined = undefined;
 
   constructor(payload: ActionJSON) {
     this._id = payload.id;

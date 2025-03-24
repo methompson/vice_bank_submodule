@@ -64,15 +64,15 @@ export class ActionDeposit {
   get depositQuantity(): number {
     return this._depositQuantity;
   }
-  get action() {
+  get action(): Action {
     return this._action;
   }
 
   get tokensEarned(): number {
+    const maxDeposit = this.action.maxDeposit ?? Infinity;
+
     const quant =
-      this.action.maxDeposit > this._depositQuantity
-        ? this.action.maxDeposit
-        : this._depositQuantity;
+      maxDeposit < this._depositQuantity ? maxDeposit : this._depositQuantity;
     return quant * this._action.conversionRate;
   }
 
