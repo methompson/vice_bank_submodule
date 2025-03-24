@@ -12,7 +12,7 @@ import { Action, ActionJSON } from './action';
 
 export interface ActionDepositJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   date: string;
   depositQuantity: number;
   action: ActionJSON;
@@ -20,7 +20,7 @@ export interface ActionDepositJSON {
 
 const isActionDepositJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   date: isValidDateTimeString,
   depositQuantity: isNumber,
   action: Action.isActionJSON,
@@ -35,7 +35,7 @@ const isActionDepositJSONTest = typeGuardTestGenerator(
 
 export class ActionDeposit {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _date: DateTime<true>;
   protected _depositQuantity: number;
   protected _action: Action;
@@ -47,7 +47,7 @@ export class ActionDeposit {
     }
     this._date = date;
     this._id = input.id;
-    this._userId = input.userId;
+    this._vbUserId = input.vbUserId;
     this._depositQuantity = input.depositQuantity;
     this._action = new Action(input.action);
   }
@@ -55,8 +55,8 @@ export class ActionDeposit {
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get date(): DateTime<true> {
     return this._date;
@@ -68,10 +68,14 @@ export class ActionDeposit {
     return this._action;
   }
 
+  get tokensEarned(): number {
+    return this._depositQuantity * this._action.conversionRate;
+  }
+
   toJSON(): ActionDepositJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       date: this.date.toISO(),
       depositQuantity: this.depositQuantity,
       action: this.action.toJSON(),

@@ -9,14 +9,14 @@ import { InvalidInputError } from '../utils/errors';
 
 export interface RewardJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   name: string;
   price: number;
 }
 
 const isRewardJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   name: isString,
   price: isNumber,
 };
@@ -26,13 +26,13 @@ const isRewardJSONTest = typeGuardTestGenerator(isRewardJSONCommon);
 
 export class Reward {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _name: string;
   protected _price: number;
 
   constructor(input: RewardJSON) {
     this._id = input.id;
-    this._userId = input.userId;
+    this._vbUserId = input.vbUserId;
     this._name = input.name;
     this._price = input.price;
   }
@@ -40,8 +40,8 @@ export class Reward {
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get name(): string {
     return this._name;
@@ -53,7 +53,7 @@ export class Reward {
   toJSON(): RewardJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       name: this.name,
       price: this.price,
     };

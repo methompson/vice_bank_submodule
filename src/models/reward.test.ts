@@ -3,7 +3,7 @@ import { Reward, RewardJSON } from './reward';
 describe('Reward', () => {
   const validInput: RewardJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     name: 'name',
     price: 1,
   };
@@ -23,7 +23,7 @@ describe('Reward', () => {
       const result = Reward.fromJSON(validInput);
       expect(result instanceof Reward).toBe(true);
       expect(result.id).toBe('id');
-      expect(result.userId).toBe('userId');
+      expect(result.vbUserId).toBe('vbUserId');
       expect(result.name).toBe('name');
       expect(result.price).toBe(1);
     });
@@ -36,7 +36,7 @@ describe('Reward', () => {
       expect(() => Reward.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => Reward.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -70,7 +70,7 @@ describe('Reward', () => {
       expect(Reward.isRewardJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(Reward.isRewardJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -104,8 +104,8 @@ describe('Reward', () => {
       expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
@@ -133,7 +133,7 @@ describe('Reward', () => {
 
       expect(result instanceof Reward).toBe(true);
       expect(result.id).toBe(newId);
-      expect(result.userId).toBe(input.userId);
+      expect(result.vbUserId).toBe(input.vbUserId);
       expect(result.name).toBe(input.name);
       expect(result.price).toBe(input.price);
     });

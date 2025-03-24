@@ -4,7 +4,7 @@ import { TaskDeposit, TaskDepositJSON } from './task_deposit';
 describe('TaskDeposit', () => {
   const taskJSON: TaskJSON = {
     id: 'id',
-    userId: 'userid',
+    vbUserId: 'vbUserId',
     name: 'name',
     frequency: 'daily',
     tokensEarnedPerInput: 1,
@@ -12,10 +12,17 @@ describe('TaskDeposit', () => {
 
   const validInput: TaskDepositJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     date: '2024-03-19T00:00:00.000-05:00',
     task: taskJSON,
   };
+
+  describe('tokensEarned', () => {
+    test('returns an expected value', () => {
+      const taskDeposit = new TaskDeposit(validInput);
+      expect(taskDeposit.tokensEarned).toBe(1);
+    });
+  });
 
   describe('toJSON', () => {
     test('returns an object with the correct fields', () => {
@@ -31,7 +38,7 @@ describe('TaskDeposit', () => {
 
       expect(taskDeposit).toBeInstanceOf(TaskDeposit);
       expect(taskDeposit.id).toBe(validInput.id);
-      expect(taskDeposit.userId).toBe(validInput.userId);
+      expect(taskDeposit.vbUserId).toBe(validInput.vbUserId);
       expect(taskDeposit.date.toISO()).toBe(validInput.date);
       expect(taskDeposit.task.toJSON()).toEqual(taskJSON);
     });
@@ -44,7 +51,7 @@ describe('TaskDeposit', () => {
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => TaskDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -80,7 +87,7 @@ describe('TaskDeposit', () => {
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(TaskDeposit.isTaskDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -116,8 +123,10 @@ describe('TaskDeposit', () => {
       expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual([
+        'vbUserId',
+      ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;

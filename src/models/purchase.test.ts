@@ -4,14 +4,14 @@ import { RewardJSON } from './reward';
 describe('Purchase', () => {
   const purchasePrice: RewardJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     name: 'name',
     price: 1,
   };
 
   const validInput: PurchaseJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     date: '2023-02-25T00:00:00.000-06:00',
     purchasedQuantity: 1,
     reward: purchasePrice,
@@ -32,7 +32,7 @@ describe('Purchase', () => {
       const result = Purchase.fromJSON(validInput);
       expect(result instanceof Purchase).toBe(true);
       expect(result.id).toBe('id');
-      expect(result.userId).toBe('userId');
+      expect(result.vbUserId).toBe('vbUserId');
       expect(result.date.toISO()).toBe('2023-02-25T00:00:00.000-06:00');
       expect(result.purchasedQuantity).toBe(1);
       expect(result.reward.toJSON()).toEqual(purchasePrice);
@@ -46,7 +46,7 @@ describe('Purchase', () => {
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => Purchase.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -84,7 +84,7 @@ describe('Purchase', () => {
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(Purchase.isPurchaseJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -122,8 +122,8 @@ describe('Purchase', () => {
       expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
@@ -157,7 +157,7 @@ describe('Purchase', () => {
 
       expect(result instanceof Purchase).toBe(true);
       expect(result.id).toBe(newId);
-      expect(result.userId).toBe(purchaseInput.userId);
+      expect(result.vbUserId).toBe(purchaseInput.vbUserId);
       expect(result.date.toISO()).toBe(purchaseInput.date.toISO());
       expect(result.purchasedQuantity).toBe(purchaseInput.purchasedQuantity);
       expect(result.reward.toJSON()).toEqual(purchasePrice);

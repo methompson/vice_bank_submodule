@@ -12,7 +12,7 @@ import { InvalidInputError } from '../utils/errors';
 /**
  * The JSON representation of an Action that can be deposited.
  * id is the Action's unique identifier.
- * userId is the user's unique identifier. Each user has its own set of actions
+ * vbUserId is the user's unique identifier. Each user has its own set of actions
  * name is the name of the action
  * conversionUnit is the unit of the action. For instance, "minutes" or "each"
  * inputQuantity is the quantity of the conversion unit that the user deposits for conversion
@@ -21,7 +21,7 @@ import { InvalidInputError } from '../utils/errors';
  */
 export interface ActionJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   name: string;
   conversionUnit: string;
   inputQuantity: number;
@@ -32,7 +32,7 @@ export interface ActionJSON {
 
 const isActionJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   name: isString,
   conversionUnit: isString,
   inputQuantity: isNumber,
@@ -56,17 +56,20 @@ const isActionJSONTest = typeGuardTestGenerator(isActionJSONCommon);
  */
 export class Action {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _name: string;
+  // The unit of the action. For instance, "minutes" or "each"
   protected _conversionUnit: string;
+  // How much you should deposit for the conversion
   protected _inputQuantity: number;
+  // How many tokens you earn from the above input quantity
   protected _tokensEarnedPerInput: number;
   protected _minDeposit: number;
   protected _maxDeposit?: number;
 
   constructor(payload: ActionJSON) {
     this._id = payload.id;
-    this._userId = payload.userId;
+    this._vbUserId = payload.vbUserId;
     this._name = payload.name;
     this._conversionUnit = payload.conversionUnit;
     this._inputQuantity = payload.inputQuantity;
@@ -78,8 +81,8 @@ export class Action {
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get name(): string {
     return this._name;
@@ -100,14 +103,16 @@ export class Action {
     return this._maxDeposit;
   }
 
+  // You should be able to multiply the amount of inputs by the
+  // the conversion rate to get the number of tokens.
   get conversionRate(): number {
-    return this.inputQuantity / this.tokensEarnedPerInput;
+    return this.inputQuantity * this.tokensEarnedPerInput;
   }
 
   toJSON(): ActionJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       name: this.name,
       conversionUnit: this.conversionUnit,
       inputQuantity: this.inputQuantity,

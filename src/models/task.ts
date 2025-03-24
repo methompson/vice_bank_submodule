@@ -10,7 +10,7 @@ import { Frequency, frequencyFromString, isFrequency } from './frequency';
 
 export interface TaskJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   name: string;
   frequency: string;
   tokensEarnedPerInput: number;
@@ -18,7 +18,7 @@ export interface TaskJSON {
 
 const isTaskJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   name: isString,
   frequency: isFrequency,
   tokensEarnedPerInput: isNumber,
@@ -29,14 +29,14 @@ const isTaskJSONTest = typeGuardTestGenerator(isTaskJSONCommon);
 
 export class Task {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _name: string;
   protected _frequency: Frequency;
   protected _tokensEarnedPerInput: number;
 
   constructor(payload: TaskJSON) {
     this._id = payload.id;
-    this._userId = payload.userId;
+    this._vbUserId = payload.vbUserId;
     this._name = payload.name;
     this._frequency = frequencyFromString(payload.frequency);
     this._tokensEarnedPerInput = payload.tokensEarnedPerInput;
@@ -45,8 +45,8 @@ export class Task {
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get name(): string {
     return this._name;
@@ -61,7 +61,7 @@ export class Task {
   toJSON(): TaskJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       name: this.name,
       frequency: this.frequency,
       tokensEarnedPerInput: this.tokensEarnedPerInput,

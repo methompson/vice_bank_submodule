@@ -7,14 +7,14 @@ import { Task, TaskJSON } from './task';
 
 export interface TaskDepositJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   date: string;
   task: TaskJSON;
 }
 
 const isTaskDepositJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   date: isValidDateTimeString,
   task: Task.isTaskJSON,
 };
@@ -26,7 +26,7 @@ const isTaskDepositJSONTest = typeGuardTestGenerator(isTaskDepositJSONCommon);
 
 export class TaskDeposit {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _date: DateTime<true>;
   protected _task: Task;
 
@@ -37,15 +37,15 @@ export class TaskDeposit {
     }
     this._date = date;
     this._id = input.id;
-    this._userId = input.userId;
+    this._vbUserId = input.vbUserId;
     this._task = new Task(input.task);
   }
 
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get date(): DateTime<true> {
     return this._date;
@@ -54,10 +54,14 @@ export class TaskDeposit {
     return this._task;
   }
 
+  get tokensEarned(): number {
+    return this._task.tokensEarnedPerInput;
+  }
+
   toJSON(): TaskDepositJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       date: this.date.toISO(),
       task: this.task.toJSON(),
     };

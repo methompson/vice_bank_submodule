@@ -4,7 +4,7 @@ import { Task, TaskJSON } from './task';
 describe('Task', () => {
   const validInput: TaskJSON = {
     id: 'id',
-    userId: 'userid',
+    vbUserId: 'vbUserId',
     name: 'name',
     frequency: 'daily',
     tokensEarnedPerInput: 1,
@@ -24,7 +24,7 @@ describe('Task', () => {
 
       expect(task).toBeInstanceOf(Task);
       expect(task.id).toBe(validInput.id);
-      expect(task.userId).toBe(validInput.userId);
+      expect(task.vbUserId).toBe(validInput.vbUserId);
       expect(task.name).toBe(validInput.name);
       expect(task.frequency).toBe(frequencyFromString(validInput.frequency));
       expect(task.tokensEarnedPerInput).toBe(validInput.tokensEarnedPerInput);
@@ -38,7 +38,7 @@ describe('Task', () => {
       expect(() => Task.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => Task.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -76,7 +76,7 @@ describe('Task', () => {
       expect(Task.isTaskJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(Task.isTaskJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -114,8 +114,8 @@ describe('Task', () => {
       expect(Task.TaskJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(Task.TaskJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;

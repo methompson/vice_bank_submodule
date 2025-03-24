@@ -3,7 +3,7 @@ import { Action, ActionJSON } from './action';
 describe('Action', () => {
   const validInput: ActionJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     name: 'name',
     conversionUnit: 'conversionUnit',
     inputQuantity: 1,
@@ -27,7 +27,7 @@ describe('Action', () => {
       const result = Action.fromJSON(validInput);
       expect(result instanceof Action).toBe(true);
       expect(result.id).toBe('id');
-      expect(result.userId).toBe('userId');
+      expect(result.vbUserId).toBe('vbUserId');
       expect(result.name).toBe('name');
       expect(result.conversionUnit).toBe('conversionUnit');
       expect(result.inputQuantity).toBe(1);
@@ -44,7 +44,7 @@ describe('Action', () => {
       expect(() => Action.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => Action.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -98,7 +98,7 @@ describe('Action', () => {
       expect(Action.isActionJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(Action.isActionJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -152,8 +152,8 @@ describe('Action', () => {
       expect(Action.ActionJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(Action.ActionJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
@@ -203,7 +203,7 @@ describe('Action', () => {
 
       expect(result instanceof Action).toBe(true);
       expect(result.id).toBe(newId);
-      expect(result.userId).toBe(input.userId);
+      expect(result.vbUserId).toBe(input.vbUserId);
       expect(result.name).toBe(input.name);
       expect(result.conversionUnit).toBe(input.conversionUnit);
       expect(result.inputQuantity).toBe(input.inputQuantity);

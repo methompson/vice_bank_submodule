@@ -12,7 +12,7 @@ import { Reward, RewardJSON } from './reward';
 
 export interface PurchaseJSON {
   id: string;
-  userId: string;
+  vbUserId: string;
   date: string;
   purchasedQuantity: number;
   reward: RewardJSON;
@@ -20,7 +20,7 @@ export interface PurchaseJSON {
 
 const isPurchaseJSONCommon = {
   id: isString,
-  userId: isString,
+  vbUserId: isString,
   date: isValidDateTimeString,
   purchasedQuantity: isNumber,
   reward: Reward.isRewardJSON,
@@ -31,7 +31,7 @@ const isPurchaseJSONTest = typeGuardTestGenerator(isPurchaseJSONCommon);
 
 export class Purchase {
   protected _id: string;
-  protected _userId: string;
+  protected _vbUserId: string;
   protected _date: DateTime<true>;
   protected _purchasedQuantity: number;
   protected _reward: Reward;
@@ -43,7 +43,7 @@ export class Purchase {
     }
     this._date = date;
     this._id = input.id;
-    this._userId = input.userId;
+    this._vbUserId = input.vbUserId;
     this._purchasedQuantity = input.purchasedQuantity;
     this._reward = new Reward(input.reward);
   }
@@ -51,8 +51,8 @@ export class Purchase {
   get id(): string {
     return this._id;
   }
-  get userId(): string {
-    return this._userId;
+  get vbUserId(): string {
+    return this._vbUserId;
   }
   get date(): DateTime<true> {
     return this._date;
@@ -67,7 +67,7 @@ export class Purchase {
   toJSON(): PurchaseJSON {
     return {
       id: this.id,
-      userId: this.userId,
+      vbUserId: this.vbUserId,
       date: this.date.toISO(),
       purchasedQuantity: this.purchasedQuantity,
       reward: this.reward.toJSON(),

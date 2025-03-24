@@ -4,7 +4,7 @@ import { ActionDeposit, ActionDepositJSON } from './action_deposit';
 describe('Deposit', () => {
   const action: ActionJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     name: 'name',
     conversionUnit: 'conversionUnit',
     inputQuantity: 1,
@@ -15,11 +15,24 @@ describe('Deposit', () => {
 
   const validInput: ActionDepositJSON = {
     id: 'id',
-    userId: 'userId',
+    vbUserId: 'vbUserId',
     date: '2023-02-25T00:00:00.000-06:00',
     depositQuantity: 1,
     action,
   };
+
+  describe('tokensEarned', () => {
+    test('returns an expected value', () => {
+      const deposit1 = new ActionDeposit(validInput);
+      expect(deposit1.tokensEarned).toBe(2);
+
+      const deposit2 = new ActionDeposit({
+        ...validInput,
+        depositQuantity: 2,
+      });
+      expect(deposit2.tokensEarned).toBe(4);
+    });
+  });
 
   describe('toJSON', () => {
     test('returns an expected value', () => {
@@ -36,7 +49,7 @@ describe('Deposit', () => {
       const result = ActionDeposit.fromJSON(validInput);
       expect(result instanceof ActionDeposit).toBe(true);
       expect(result.id).toBe(validInput.id);
-      expect(result.userId).toBe(validInput.userId);
+      expect(result.vbUserId).toBe(validInput.vbUserId);
       expect(result.date.toISO()).toBe(validInput.date);
       expect(result.depositQuantity).toBe(validInput.depositQuantity);
       expect(result.action.toJSON()).toEqual(action);
@@ -50,7 +63,7 @@ describe('Deposit', () => {
       expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(() => ActionDeposit.fromJSON(invalidInput)).toThrow();
 
       invalidInput = { ...validInput };
@@ -88,7 +101,7 @@ describe('Deposit', () => {
       expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
+      delete invalidInput.vbUserId;
       expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
@@ -126,8 +139,8 @@ describe('Deposit', () => {
       expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
-      delete invalidInput.userId;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['userId']);
+      delete invalidInput.vbUserId;
+      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
@@ -161,7 +174,7 @@ describe('Deposit', () => {
 
       expect(result instanceof ActionDeposit).toBe(true);
       expect(result.id).toBe(newId);
-      expect(result.userId).toBe(depositInput.userId);
+      expect(result.vbUserId).toBe(depositInput.vbUserId);
       expect(result.date.toISO()).toBe(depositInput.date.toISO());
       expect(result.depositQuantity).toBe(depositInput.depositQuantity);
       expect(result.action.toJSON()).toEqual(action);
