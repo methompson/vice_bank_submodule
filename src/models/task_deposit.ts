@@ -69,7 +69,7 @@ export class TaskDeposit {
 
   static fromJSON(input: unknown): TaskDeposit {
     if (!TaskDeposit.isTaskDepositJSON(input)) {
-      const errors = TaskDeposit.TaskDepositJSONTest(input);
+      const errors = TaskDeposit.taskDepositJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -84,5 +84,5 @@ export class TaskDeposit {
   }
 
   static isTaskDepositJSON = isTaskDepositJSON;
-  static TaskDepositJSONTest = isTaskDepositJSONTest;
+  static taskDepositJSONTest = isTaskDepositJSONTest;
 }
