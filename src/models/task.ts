@@ -70,7 +70,7 @@ export class Task {
 
   static fromJSON(input: unknown): Task {
     if (!Task.isTaskJSON(input)) {
-      const errors = Task.TaskJSONTest(input);
+      const errors = Task.taskJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -78,8 +78,7 @@ export class Task {
   }
 
   static isTaskJSON = isTaskJSON;
-
-  static TaskJSONTest = isTaskJSONTest;
+  static taskJSONTest = isTaskJSONTest;
 
   static fromNewTask(id: string, input: Task): Task {
     return new Task({ ...input.toJSON(), id });

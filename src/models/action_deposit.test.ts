@@ -88,9 +88,9 @@ describe('Deposit', () => {
     });
   });
 
-  describe('isDepositJSON', () => {
+  describe('isActionDepositJSON', () => {
     test('returns true if the input is valid', () => {
-      expect(ActionDeposit.isDepositJSON(validInput)).toBe(true);
+      expect(ActionDeposit.isActionDepositJSON(validInput)).toBe(true);
     });
 
     test('returns false if the input is missing any value from a valid input', () => {
@@ -98,37 +98,37 @@ describe('Deposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.depositQuantity;
-      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(invalidInput)).toBe(false);
 
       invalidInput = { ...validInput };
       delete invalidInput.action;
-      expect(ActionDeposit.isDepositJSON(invalidInput)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(invalidInput)).toBe(false);
     });
 
     test('returns false if the input is not an object', () => {
-      expect(ActionDeposit.isDepositJSON('invalidInput')).toBe(false);
-      expect(ActionDeposit.isDepositJSON(1)).toBe(false);
-      expect(ActionDeposit.isDepositJSON(true)).toBe(false);
-      expect(ActionDeposit.isDepositJSON([])).toBe(false);
-      expect(ActionDeposit.isDepositJSON(null)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON('invalidInput')).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(1)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(true)).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON([])).toBe(false);
+      expect(ActionDeposit.isActionDepositJSON(null)).toBe(false);
     });
   });
 
-  describe('DepositJSONTest', () => {
+  describe('actionDepositJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(ActionDeposit.DepositJSONTest(validInput)).toEqual([]);
+      expect(ActionDeposit.actionDepositJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -136,33 +136,41 @@ describe('Deposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['id']);
+      expect(ActionDeposit.actionDepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['vbUserId']);
+      expect(ActionDeposit.actionDepositJSONTest(invalidInput)).toEqual([
+        'vbUserId',
+      ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['date']);
+      expect(ActionDeposit.actionDepositJSONTest(invalidInput)).toEqual([
+        'date',
+      ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.depositQuantity;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual([
+      expect(ActionDeposit.actionDepositJSONTest(invalidInput)).toEqual([
         'depositQuantity',
       ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.action;
-      expect(ActionDeposit.DepositJSONTest(invalidInput)).toEqual(['action']);
+      expect(ActionDeposit.actionDepositJSONTest(invalidInput)).toEqual([
+        'action',
+      ]);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(ActionDeposit.DepositJSONTest('invalidInput')).toEqual(['root']);
-      expect(ActionDeposit.DepositJSONTest(1)).toEqual(['root']);
-      expect(ActionDeposit.DepositJSONTest(true)).toEqual(['root']);
-      expect(ActionDeposit.DepositJSONTest([])).toEqual(['root']);
-      expect(ActionDeposit.DepositJSONTest(null)).toEqual(['root']);
+      expect(ActionDeposit.actionDepositJSONTest('invalidInput')).toEqual([
+        'root',
+      ]);
+      expect(ActionDeposit.actionDepositJSONTest(1)).toEqual(['root']);
+      expect(ActionDeposit.actionDepositJSONTest(true)).toEqual(['root']);
+      expect(ActionDeposit.actionDepositJSONTest([])).toEqual(['root']);
+      expect(ActionDeposit.actionDepositJSONTest(null)).toEqual(['root']);
     });
   });
 

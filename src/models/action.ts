@@ -126,7 +126,7 @@ export class Action {
 
   static fromJSON(input: unknown): Action {
     if (!Action.isActionJSON(input)) {
-      const errors = Action.ActionJSONTest(input);
+      const errors = Action.actionJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -141,5 +141,5 @@ export class Action {
   }
 
   static isActionJSON = isActionJSON;
-  static ActionJSONTest = isActionJSONTest;
+  static actionJSONTest = isActionJSONTest;
 }

@@ -76,7 +76,7 @@ export class Purchase {
 
   static fromJSON(input: unknown): Purchase {
     if (!Purchase.isPurchaseJSON(input)) {
-      const errors = Purchase.PurchaseJSONTest(input);
+      const errors = Purchase.purchaseJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -91,5 +91,5 @@ export class Purchase {
   }
 
   static isPurchaseJSON = isPurchaseJSON;
-  static PurchaseJSONTest = isPurchaseJSONTest;
+  static purchaseJSONTest = isPurchaseJSONTest;
 }

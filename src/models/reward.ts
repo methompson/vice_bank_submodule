@@ -61,7 +61,7 @@ export class Reward {
 
   static fromJSON(input: unknown): Reward {
     if (!Reward.isRewardJSON(input)) {
-      const errors = Reward.isRewardJSONTest(input);
+      const errors = Reward.rewardJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -69,7 +69,7 @@ export class Reward {
   }
 
   static isRewardJSON = isRewardJSON;
-  static isRewardJSONTest = isRewardJSONTest;
+  static rewardJSONTest = isRewardJSONTest;
 
   static fromNewReward(id: string, reward: Reward): Reward {
     return new Reward({

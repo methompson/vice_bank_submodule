@@ -68,7 +68,7 @@ export class ViceBankUser {
 
   static fromJSON(input: unknown): ViceBankUser {
     if (!ViceBankUser.isViceBankUserJSON(input)) {
-      const errors = ViceBankUser.ViceBankUserJSONTest(input);
+      const errors = ViceBankUser.viceBankUserJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -76,8 +76,7 @@ export class ViceBankUser {
   }
 
   static isViceBankUserJSON = isViceBankUserJSON;
-
-  static ViceBankUserJSONTest = isViceBankUserJSONTest;
+  static viceBankUserJSONTest = isViceBankUserJSONTest;
 
   static fromNewViceBankUser(id: string, input: ViceBankUser): ViceBankUser {
     return ViceBankUser.fromJSON({

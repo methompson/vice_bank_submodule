@@ -83,9 +83,9 @@ describe('ViceBankUser', () => {
     });
   });
 
-  describe('ViceBankUserJSONTest', () => {
+  describe('viceBankUserJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(ViceBankUser.ViceBankUserJSONTest(validInput)).toEqual([]);
+      expect(ViceBankUser.viceBankUserJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -93,27 +93,27 @@ describe('ViceBankUser', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(ViceBankUser.ViceBankUserJSONTest(invalidInput)).toEqual(['id']);
+      expect(ViceBankUser.viceBankUserJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
-      expect(ViceBankUser.ViceBankUserJSONTest(invalidInput)).toEqual(['name']);
+      expect(ViceBankUser.viceBankUserJSONTest(invalidInput)).toEqual(['name']);
 
       invalidInput = { ...validInput };
       delete invalidInput.currentTokens;
-      expect(ViceBankUser.ViceBankUserJSONTest(invalidInput)).toEqual([
+      expect(ViceBankUser.viceBankUserJSONTest(invalidInput)).toEqual([
         'currentTokens',
       ]);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(ViceBankUser.ViceBankUserJSONTest('invalidInput')).toEqual([
+      expect(ViceBankUser.viceBankUserJSONTest('invalidInput')).toEqual([
         'root',
       ]);
-      expect(ViceBankUser.ViceBankUserJSONTest(1)).toEqual(['root']);
-      expect(ViceBankUser.ViceBankUserJSONTest(true)).toEqual(['root']);
-      expect(ViceBankUser.ViceBankUserJSONTest([])).toEqual(['root']);
-      expect(ViceBankUser.ViceBankUserJSONTest(null)).toEqual(['root']);
+      expect(ViceBankUser.viceBankUserJSONTest(1)).toEqual(['root']);
+      expect(ViceBankUser.viceBankUserJSONTest(true)).toEqual(['root']);
+      expect(ViceBankUser.viceBankUserJSONTest([])).toEqual(['root']);
+      expect(ViceBankUser.viceBankUserJSONTest(null)).toEqual(['root']);
     });
   });
 

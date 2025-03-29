@@ -94,8 +94,8 @@ export class ActionDeposit {
   }
 
   static fromJSON(input: unknown): ActionDeposit {
-    if (!ActionDeposit.isDepositJSON(input)) {
-      const errors = ActionDeposit.DepositJSONTest(input);
+    if (!ActionDeposit.isActionDepositJSON(input)) {
+      const errors = ActionDeposit.actionDepositJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -114,7 +114,6 @@ export class ActionDeposit {
     });
   }
 
-  static isDepositJSON = isActionDepositJSON;
-
-  static DepositJSONTest = isActionDepositJSONTest;
+  static isActionDepositJSON = isActionDepositJSON;
+  static actionDepositJSONTest = isActionDepositJSONTest;
 }
