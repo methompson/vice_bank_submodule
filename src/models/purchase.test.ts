@@ -2,7 +2,7 @@ import { Purchase, PurchaseJSON } from './purchase';
 import { RewardJSON } from './reward';
 
 describe('Purchase', () => {
-  const purchasePrice: RewardJSON = {
+  const rewardJSON: RewardJSON = {
     id: 'id',
     vbUserId: 'vbUserId',
     name: 'name',
@@ -14,7 +14,7 @@ describe('Purchase', () => {
     vbUserId: 'vbUserId',
     date: '2023-02-25T00:00:00.000-06:00',
     purchasedQuantity: 1,
-    reward: purchasePrice,
+    reward: rewardJSON,
   };
 
   describe('toJSON', () => {
@@ -35,7 +35,7 @@ describe('Purchase', () => {
       expect(result.vbUserId).toBe('vbUserId');
       expect(result.date.toISO()).toBe('2023-02-25T00:00:00.000-06:00');
       expect(result.purchasedQuantity).toBe(1);
-      expect(result.reward.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(rewardJSON);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -160,7 +160,7 @@ describe('Purchase', () => {
       expect(result.vbUserId).toBe(purchaseInput.vbUserId);
       expect(result.date.toISO()).toBe(purchaseInput.date.toISO());
       expect(result.purchasedQuantity).toBe(purchaseInput.purchasedQuantity);
-      expect(result.reward.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(rewardJSON);
     });
   });
 });
