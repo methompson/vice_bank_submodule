@@ -64,6 +64,10 @@ export class Purchase {
     return this._reward;
   }
 
+  get tokensSpent(): number {
+    return this._reward.price * this._purchasedQuantity;
+  }
+
   toJSON(): PurchaseJSON {
     return {
       id: this.id,
