@@ -5,6 +5,7 @@ import {
   typeGuardGenerator,
   typeGuardTestGenerator,
 } from 'tcheck';
+import { v4 as uuidv4 } from 'uuid';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
@@ -111,6 +112,16 @@ export class ActionDeposit {
     return new ActionDeposit({
       ...input.toJSON(),
       id,
+    });
+  }
+
+  static fromAction(action: Action, depositQuantity: number) {
+    return new ActionDeposit({
+      id: uuidv4(),
+      vbUserId: action.vbUserId,
+      date: DateTime.now().toISO(),
+      depositQuantity,
+      action: action.toJSON(),
     });
   }
 
