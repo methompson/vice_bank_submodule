@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { isString, typeGuardGenerator, typeGuardTestGenerator } from 'tcheck';
+import { v4 as uuidv4 } from 'uuid';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
@@ -80,6 +81,15 @@ export class TaskDeposit {
     return new TaskDeposit({
       ...taskDeposit.toJSON(),
       id,
+    });
+  }
+
+  static fromTask(task: Task) {
+    return new TaskDeposit({
+      id: uuidv4(),
+      vbUserId: task.vbUserId,
+      date: DateTime.now().toISO(),
+      task: task.toJSON(),
     });
   }
 
