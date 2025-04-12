@@ -120,10 +120,11 @@ export class ActionDeposit {
     depositQuantity: number,
     options?: { date?: DateTime<true> },
   ): ActionDeposit {
+    const date = options?.date ?? DateTime.now();
     return new ActionDeposit({
       id: uuidv4(),
       vbUserId: action.vbUserId,
-      date: DateTime.now().toISO(),
+      date: date.toISO(),
       depositQuantity,
       action: action.toJSON(),
     });
