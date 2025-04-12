@@ -115,7 +115,11 @@ export class ActionDeposit {
     });
   }
 
-  static fromAction(action: Action, depositQuantity: number) {
+  static fromAction(
+    action: Action,
+    depositQuantity: number,
+    options?: { date?: DateTime<true> },
+  ): ActionDeposit {
     return new ActionDeposit({
       id: uuidv4(),
       vbUserId: action.vbUserId,

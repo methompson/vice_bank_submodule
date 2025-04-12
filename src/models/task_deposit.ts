@@ -84,11 +84,15 @@ export class TaskDeposit {
     });
   }
 
-  static fromTask(task: Task) {
+  static fromTask(
+    task: Task,
+    options?: { date?: DateTime<true> },
+  ): TaskDeposit {
+    const date = options?.date ?? DateTime.now();
     return new TaskDeposit({
       id: uuidv4(),
       vbUserId: task.vbUserId,
-      date: DateTime.now().toISO(),
+      date: date.toISO(),
       task: task.toJSON(),
     });
   }
