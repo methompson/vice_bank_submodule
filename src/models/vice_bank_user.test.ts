@@ -6,7 +6,6 @@ describe('ViceBankUser', () => {
     id: 'id',
     userId,
     name: 'name',
-    currentTokens: 1,
   };
 
   describe('toJSON', () => {
@@ -25,7 +24,6 @@ describe('ViceBankUser', () => {
       expect(result instanceof ViceBankUser).toBe(true);
       expect(result.id).toBe('id');
       expect(result.name).toBe('name');
-      expect(result.currentTokens).toBe(1);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -37,10 +35,6 @@ describe('ViceBankUser', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
-      expect(() => ViceBankUser.fromJSON(invalidInput)).toThrow();
-
-      invalidInput = { ...validInput };
-      delete invalidInput.currentTokens;
       expect(() => ViceBankUser.fromJSON(invalidInput)).toThrow();
     });
 
@@ -68,10 +62,6 @@ describe('ViceBankUser', () => {
       invalidInput = { ...validInput };
       delete invalidInput.name;
       expect(ViceBankUser.isViceBankUserJSON(invalidInput)).toBe(false);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.currentTokens;
-      expect(ViceBankUser.isViceBankUserJSON(invalidInput)).toBe(false);
     });
 
     test('returns false if the input is not an object', () => {
@@ -98,12 +88,6 @@ describe('ViceBankUser', () => {
       invalidInput = { ...validInput };
       delete invalidInput.name;
       expect(ViceBankUser.viceBankUserJSONTest(invalidInput)).toEqual(['name']);
-
-      invalidInput = { ...validInput };
-      delete invalidInput.currentTokens;
-      expect(ViceBankUser.viceBankUserJSONTest(invalidInput)).toEqual([
-        'currentTokens',
-      ]);
     });
 
     test('returns root if the input is not an object', () => {
@@ -126,7 +110,6 @@ describe('ViceBankUser', () => {
       expect(result instanceof ViceBankUser).toBe(true);
       expect(result.id).toBe(newId);
       expect(result.name).toBe(userInput.name);
-      expect(result.currentTokens).toBe(userInput.currentTokens);
     });
   });
 });
