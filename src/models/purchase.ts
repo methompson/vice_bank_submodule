@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 import {
   isNumber,
@@ -91,6 +92,21 @@ export class Purchase {
     return new Purchase({
       ...purchase.toJSON(),
       id,
+    });
+  }
+
+  static fromReward(
+    reward: Reward,
+    purchasedQuantity: number,
+    options?: { date: DateTime<true> },
+  ): Purchase {
+    const date = options?.date ?? DateTime.now();
+    return new Purchase({
+      id: uuidv4(),
+      vbUserId: reward.vbUserId,
+      date: date.toISO(),
+      purchasedQuantity,
+      reward: reward.toJSON(),
     });
   }
 

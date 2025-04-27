@@ -1,10 +1,5 @@
 import { InvalidInputError } from '../utils/errors';
-import {
-  isNumber,
-  isString,
-  typeGuardGenerator,
-  typeGuardTestGenerator,
-} from 'tcheck';
+import { isString, typeGuardGenerator, typeGuardTestGenerator } from 'tcheck';
 
 export interface ViceBankUserJSON {
   id: string;
