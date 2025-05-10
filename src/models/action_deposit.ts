@@ -74,6 +74,11 @@ export class ActionDeposit {
 
     const quant =
       maxDeposit < this._depositQuantity ? maxDeposit : this._depositQuantity;
+
+    console.log({
+      quant,
+      conversionRate: this._action.conversionRate,
+    });
     return quant * this._action.conversionRate;
   }
 

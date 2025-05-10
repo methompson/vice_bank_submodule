@@ -108,7 +108,7 @@ export class Action {
   // You should be able to multiply the amount of inputs by the
   // the conversion rate to get the number of tokens.
   get conversionRate(): number {
-    return this.inputQuantity * this.tokensEarnedPerInput;
+    return this.tokensEarnedPerInput / this.inputQuantity;
   }
 
   toJSON(): ActionJSON {
