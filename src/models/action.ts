@@ -5,7 +5,7 @@ import {
   typeGuardGenerator,
   typeGuardTestGenerator,
   unionGuard,
-} from 'tcheck';
+} from '@metools/tcheck';
 
 import { InvalidInputError } from '../utils/errors';
 

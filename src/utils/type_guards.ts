@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { isString } from 'tcheck';
+import { isString } from '@metools/tcheck';
 
 export type ValidDateTimeString = string;
 

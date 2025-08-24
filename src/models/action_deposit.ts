@@ -4,7 +4,7 @@ import {
   isString,
   typeGuardGenerator,
   typeGuardTestGenerator,
-} from 'tcheck';
+} from '@metools/tcheck';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';

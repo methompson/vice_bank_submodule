@@ -1,13 +1,11 @@
 {
-  "compilerOptions": {
-    "lib": [
-      "esnext"
-    ],
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "noImplicitAny": true,
-    "noUncheckedIndexedAccess": true,
-    "strict": true,
-  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.project.json"
+    },
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ]
 }

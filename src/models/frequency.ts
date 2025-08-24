@@ -1,4 +1,4 @@
-import { isEnumValueGenerator } from 'tcheck';
+import { isEnumValueGenerator } from '@metools/tcheck';
 
 export enum Frequency {
   Daily = 'daily',

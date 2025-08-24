@@ -1,5 +1,9 @@
 import { DateTime } from 'luxon';
-import { isString, typeGuardGenerator, typeGuardTestGenerator } from 'tcheck';
+import {
+  isString,
+  typeGuardGenerator,
+  typeGuardTestGenerator,
+} from '@metools/tcheck';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';

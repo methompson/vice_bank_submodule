@@ -4,7 +4,7 @@ import {
   isString,
   typeGuardGenerator,
   typeGuardTestGenerator,
-} from 'tcheck';
+} from '@metools/tcheck';
 
 export interface ViceBankUserJSON {
   id: string;

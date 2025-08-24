@@ -3,7 +3,7 @@ import {
   isString,
   typeGuardGenerator,
   typeGuardTestGenerator,
-} from 'tcheck';
+} from '@metools/tcheck';
 
 import { InvalidInputError } from '../utils/errors';
 import { Frequency, frequencyFromString, isFrequency } from './frequency';
