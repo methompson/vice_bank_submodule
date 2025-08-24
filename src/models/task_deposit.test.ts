@@ -108,9 +108,9 @@ describe('TaskDeposit', () => {
     });
   });
 
-  describe('TaskDepositJSONTest', () => {
+  describe('taskDepositJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      const result = TaskDeposit.TaskDepositJSONTest(validInput);
+      const result = TaskDeposit.taskDepositJSONTest(validInput);
 
       expect(result).toEqual([]);
     });
@@ -120,29 +120,29 @@ describe('TaskDeposit', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['id']);
+      expect(TaskDeposit.taskDepositJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual([
+      expect(TaskDeposit.taskDepositJSONTest(invalidInput)).toEqual([
         'vbUserId',
       ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['date']);
+      expect(TaskDeposit.taskDepositJSONTest(invalidInput)).toEqual(['date']);
 
       invalidInput = { ...validInput };
       delete invalidInput.task;
-      expect(TaskDeposit.TaskDepositJSONTest(invalidInput)).toEqual(['task']);
+      expect(TaskDeposit.taskDepositJSONTest(invalidInput)).toEqual(['task']);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(TaskDeposit.TaskDepositJSONTest('invalidInput')).toEqual(['root']);
-      expect(TaskDeposit.TaskDepositJSONTest(1)).toEqual(['root']);
-      expect(TaskDeposit.TaskDepositJSONTest(true)).toEqual(['root']);
-      expect(TaskDeposit.TaskDepositJSONTest([])).toEqual(['root']);
-      expect(TaskDeposit.TaskDepositJSONTest(null)).toEqual(['root']);
+      expect(TaskDeposit.taskDepositJSONTest('invalidInput')).toEqual(['root']);
+      expect(TaskDeposit.taskDepositJSONTest(1)).toEqual(['root']);
+      expect(TaskDeposit.taskDepositJSONTest(true)).toEqual(['root']);
+      expect(TaskDeposit.taskDepositJSONTest([])).toEqual(['root']);
+      expect(TaskDeposit.taskDepositJSONTest(null)).toEqual(['root']);
     });
   });
 

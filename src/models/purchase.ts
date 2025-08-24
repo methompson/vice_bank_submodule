@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 import {
   isNumber,
@@ -64,6 +65,10 @@ export class Purchase {
     return this._reward;
   }
 
+  get tokensSpent(): number {
+    return this._reward.price * this._purchasedQuantity;
+  }
+
   toJSON(): PurchaseJSON {
     return {
       id: this.id,
@@ -76,7 +81,7 @@ export class Purchase {
 
   static fromJSON(input: unknown): Purchase {
     if (!Purchase.isPurchaseJSON(input)) {
-      const errors = Purchase.PurchaseJSONTest(input);
+      const errors = Purchase.purchaseJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -90,6 +95,21 @@ export class Purchase {
     });
   }
 
+  static fromReward(
+    reward: Reward,
+    purchasedQuantity: number,
+    options?: { date: DateTime<true> },
+  ): Purchase {
+    const date = options?.date ?? DateTime.now();
+    return new Purchase({
+      id: uuidv4(),
+      vbUserId: reward.vbUserId,
+      date: date.toISO(),
+      purchasedQuantity,
+      reward: reward.toJSON(),
+    });
+  }
+
   static isPurchaseJSON = isPurchaseJSON;
-  static PurchaseJSONTest = isPurchaseJSONTest;
+  static purchaseJSONTest = isPurchaseJSONTest;
 }

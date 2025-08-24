@@ -2,7 +2,7 @@ import { Purchase, PurchaseJSON } from './purchase';
 import { RewardJSON } from './reward';
 
 describe('Purchase', () => {
-  const purchasePrice: RewardJSON = {
+  const rewardJSON: RewardJSON = {
     id: 'id',
     vbUserId: 'vbUserId',
     name: 'name',
@@ -14,7 +14,7 @@ describe('Purchase', () => {
     vbUserId: 'vbUserId',
     date: '2023-02-25T00:00:00.000-06:00',
     purchasedQuantity: 1,
-    reward: purchasePrice,
+    reward: rewardJSON,
   };
 
   describe('toJSON', () => {
@@ -35,7 +35,7 @@ describe('Purchase', () => {
       expect(result.vbUserId).toBe('vbUserId');
       expect(result.date.toISO()).toBe('2023-02-25T00:00:00.000-06:00');
       expect(result.purchasedQuantity).toBe(1);
-      expect(result.reward.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(rewardJSON);
     });
 
     test('throws an error if values are missing from the input', () => {
@@ -109,9 +109,9 @@ describe('Purchase', () => {
     });
   });
 
-  describe('PurchaseJSONTest', () => {
+  describe('purchaseJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(Purchase.PurchaseJSONTest(validInput)).toEqual([]);
+      expect(Purchase.purchaseJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -119,33 +119,33 @@ describe('Purchase', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['id']);
+      expect(Purchase.purchaseJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['vbUserId']);
+      expect(Purchase.purchaseJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.date;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['date']);
+      expect(Purchase.purchaseJSONTest(invalidInput)).toEqual(['date']);
 
       invalidInput = { ...validInput };
       delete invalidInput.purchasedQuantity;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual([
+      expect(Purchase.purchaseJSONTest(invalidInput)).toEqual([
         'purchasedQuantity',
       ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.reward;
-      expect(Purchase.PurchaseJSONTest(invalidInput)).toEqual(['reward']);
+      expect(Purchase.purchaseJSONTest(invalidInput)).toEqual(['reward']);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(Purchase.PurchaseJSONTest('invalidInput')).toEqual(['root']);
-      expect(Purchase.PurchaseJSONTest(1)).toEqual(['root']);
-      expect(Purchase.PurchaseJSONTest(true)).toEqual(['root']);
-      expect(Purchase.PurchaseJSONTest([])).toEqual(['root']);
-      expect(Purchase.PurchaseJSONTest(null)).toEqual(['root']);
+      expect(Purchase.purchaseJSONTest('invalidInput')).toEqual(['root']);
+      expect(Purchase.purchaseJSONTest(1)).toEqual(['root']);
+      expect(Purchase.purchaseJSONTest(true)).toEqual(['root']);
+      expect(Purchase.purchaseJSONTest([])).toEqual(['root']);
+      expect(Purchase.purchaseJSONTest(null)).toEqual(['root']);
     });
   });
 
@@ -160,7 +160,7 @@ describe('Purchase', () => {
       expect(result.vbUserId).toBe(purchaseInput.vbUserId);
       expect(result.date.toISO()).toBe(purchaseInput.date.toISO());
       expect(result.purchasedQuantity).toBe(purchaseInput.purchasedQuantity);
-      expect(result.reward.toJSON()).toEqual(purchasePrice);
+      expect(result.reward.toJSON()).toEqual(rewardJSON);
     });
   });
 });

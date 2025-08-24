@@ -139,9 +139,9 @@ describe('Action', () => {
     });
   });
 
-  describe('ActionJSONTest', () => {
+  describe('actionJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(Action.ActionJSONTest(validInput)).toEqual([]);
+      expect(Action.actionJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -149,33 +149,33 @@ describe('Action', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['id']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['vbUserId']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['name']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['name']);
 
       invalidInput = { ...validInput };
       delete invalidInput.conversionUnit;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['conversionUnit']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['conversionUnit']);
 
       invalidInput = { ...validInput };
       delete invalidInput.inputQuantity;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['inputQuantity']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['inputQuantity']);
 
       invalidInput = { ...validInput };
       delete invalidInput.tokensEarnedPerInput;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual([
+      expect(Action.actionJSONTest(invalidInput)).toEqual([
         'tokensEarnedPerInput',
       ]);
 
       invalidInput = { ...validInput };
       delete invalidInput.minDeposit;
-      expect(Action.ActionJSONTest(invalidInput)).toEqual(['minDeposit']);
+      expect(Action.actionJSONTest(invalidInput)).toEqual(['minDeposit']);
     });
 
     test('returns an empty array for missing non-required values', () => {
@@ -183,15 +183,15 @@ describe('Action', () => {
 
       input = { ...validInput };
       delete input.maxDeposit;
-      expect(Action.ActionJSONTest(input)).toEqual([]);
+      expect(Action.actionJSONTest(input)).toEqual([]);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(Action.ActionJSONTest('invalidInput')).toEqual(['root']);
-      expect(Action.ActionJSONTest(1)).toEqual(['root']);
-      expect(Action.ActionJSONTest(true)).toEqual(['root']);
-      expect(Action.ActionJSONTest([])).toEqual(['root']);
-      expect(Action.ActionJSONTest(null)).toEqual(['root']);
+      expect(Action.actionJSONTest('invalidInput')).toEqual(['root']);
+      expect(Action.actionJSONTest(1)).toEqual(['root']);
+      expect(Action.actionJSONTest(true)).toEqual(['root']);
+      expect(Action.actionJSONTest([])).toEqual(['root']);
+      expect(Action.actionJSONTest(null)).toEqual(['root']);
     });
   });
 

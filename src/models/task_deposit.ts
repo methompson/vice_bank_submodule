@@ -4,6 +4,7 @@ import {
   typeGuardGenerator,
   typeGuardTestGenerator,
 } from '@metools/tcheck';
+import { v4 as uuidv4 } from 'uuid';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
@@ -73,7 +74,7 @@ export class TaskDeposit {
 
   static fromJSON(input: unknown): TaskDeposit {
     if (!TaskDeposit.isTaskDepositJSON(input)) {
-      const errors = TaskDeposit.TaskDepositJSONTest(input);
+      const errors = TaskDeposit.taskDepositJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -87,6 +88,19 @@ export class TaskDeposit {
     });
   }
 
+  static fromTask(
+    task: Task,
+    options?: { date?: DateTime<true> },
+  ): TaskDeposit {
+    const date = options?.date ?? DateTime.now();
+    return new TaskDeposit({
+      id: uuidv4(),
+      vbUserId: task.vbUserId,
+      date: date.toISO(),
+      task: task.toJSON(),
+    });
+  }
+
   static isTaskDepositJSON = isTaskDepositJSON;
-  static TaskDepositJSONTest = isTaskDepositJSONTest;
+  static taskDepositJSONTest = isTaskDepositJSONTest;
 }

@@ -108,7 +108,7 @@ export class Action {
   // You should be able to multiply the amount of inputs by the
   // the conversion rate to get the number of tokens.
   get conversionRate(): number {
-    return this.inputQuantity * this.tokensEarnedPerInput;
+    return this.tokensEarnedPerInput / this.inputQuantity;
   }
 
   toJSON(): ActionJSON {
@@ -126,7 +126,7 @@ export class Action {
 
   static fromJSON(input: unknown): Action {
     if (!Action.isActionJSON(input)) {
-      const errors = Action.ActionJSONTest(input);
+      const errors = Action.actionJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -141,5 +141,5 @@ export class Action {
   }
 
   static isActionJSON = isActionJSON;
-  static ActionJSONTest = isActionJSONTest;
+  static actionJSONTest = isActionJSONTest;
 }

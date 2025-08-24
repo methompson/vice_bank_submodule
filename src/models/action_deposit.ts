@@ -5,6 +5,7 @@ import {
   typeGuardGenerator,
   typeGuardTestGenerator,
 } from '@metools/tcheck';
+import { v4 as uuidv4 } from 'uuid';
 
 import { InvalidInputError } from '../utils/errors';
 import { isValidDateTimeString } from '../utils/type_guards';
@@ -73,6 +74,7 @@ export class ActionDeposit {
 
     const quant =
       maxDeposit < this._depositQuantity ? maxDeposit : this._depositQuantity;
+
     return quant * this._action.conversionRate;
   }
 
@@ -94,8 +96,8 @@ export class ActionDeposit {
   }
 
   static fromJSON(input: unknown): ActionDeposit {
-    if (!ActionDeposit.isDepositJSON(input)) {
-      const errors = ActionDeposit.DepositJSONTest(input);
+    if (!ActionDeposit.isActionDepositJSON(input)) {
+      const errors = ActionDeposit.actionDepositJSONTest(input);
       throw new InvalidInputError(`Invalid JSON ${errors.join(', ')}`);
     }
 
@@ -114,7 +116,21 @@ export class ActionDeposit {
     });
   }
 
-  static isDepositJSON = isActionDepositJSON;
+  static fromAction(
+    action: Action,
+    depositQuantity: number,
+    options?: { date?: DateTime<true> },
+  ): ActionDeposit {
+    const date = options?.date ?? DateTime.now();
+    return new ActionDeposit({
+      id: uuidv4(),
+      vbUserId: action.vbUserId,
+      date: date.toISO(),
+      depositQuantity,
+      action: action.toJSON(),
+    });
+  }
 
-  static DepositJSONTest = isActionDepositJSONTest;
+  static isActionDepositJSON = isActionDepositJSON;
+  static actionDepositJSONTest = isActionDepositJSONTest;
 }

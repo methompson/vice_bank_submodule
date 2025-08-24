@@ -101,9 +101,9 @@ describe('Task', () => {
     });
   });
 
-  describe('TaskJSONTest', () => {
+  describe('taskJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(Task.TaskJSONTest(validInput)).toEqual([]);
+      expect(Task.taskJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of missing fields if the input is invalid', () => {
@@ -111,31 +111,31 @@ describe('Task', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['id']);
+      expect(Task.taskJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['vbUserId']);
+      expect(Task.taskJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['name']);
+      expect(Task.taskJSONTest(invalidInput)).toEqual(['name']);
 
       invalidInput = { ...validInput };
       delete invalidInput.frequency;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['frequency']);
+      expect(Task.taskJSONTest(invalidInput)).toEqual(['frequency']);
 
       invalidInput = { ...validInput };
       delete invalidInput.tokensEarnedPerInput;
-      expect(Task.TaskJSONTest(invalidInput)).toEqual(['tokensEarnedPerInput']);
+      expect(Task.taskJSONTest(invalidInput)).toEqual(['tokensEarnedPerInput']);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(Task.TaskJSONTest('invalidInput')).toEqual(['root']);
-      expect(Task.TaskJSONTest(1)).toEqual(['root']);
-      expect(Task.TaskJSONTest(true)).toEqual(['root']);
-      expect(Task.TaskJSONTest([])).toEqual(['root']);
-      expect(Task.TaskJSONTest(null)).toEqual(['root']);
+      expect(Task.taskJSONTest('invalidInput')).toEqual(['root']);
+      expect(Task.taskJSONTest(1)).toEqual(['root']);
+      expect(Task.taskJSONTest(true)).toEqual(['root']);
+      expect(Task.taskJSONTest([])).toEqual(['root']);
+      expect(Task.taskJSONTest(null)).toEqual(['root']);
     });
   });
 

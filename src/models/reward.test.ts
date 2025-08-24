@@ -91,9 +91,9 @@ describe('Reward', () => {
     });
   });
 
-  describe('RewardJSONTest', () => {
+  describe('rewardJSONTest', () => {
     test('returns an empty array if the input is valid', () => {
-      expect(Reward.isRewardJSONTest(validInput)).toEqual([]);
+      expect(Reward.rewardJSONTest(validInput)).toEqual([]);
     });
 
     test('returns an array of strings if the input is missing any value from a valid input', () => {
@@ -101,27 +101,27 @@ describe('Reward', () => {
 
       invalidInput = { ...validInput };
       delete invalidInput.id;
-      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['id']);
+      expect(Reward.rewardJSONTest(invalidInput)).toEqual(['id']);
 
       invalidInput = { ...validInput };
       delete invalidInput.vbUserId;
-      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['vbUserId']);
+      expect(Reward.rewardJSONTest(invalidInput)).toEqual(['vbUserId']);
 
       invalidInput = { ...validInput };
       delete invalidInput.name;
-      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['name']);
+      expect(Reward.rewardJSONTest(invalidInput)).toEqual(['name']);
 
       invalidInput = { ...validInput };
       delete invalidInput.price;
-      expect(Reward.isRewardJSONTest(invalidInput)).toEqual(['price']);
+      expect(Reward.rewardJSONTest(invalidInput)).toEqual(['price']);
     });
 
     test('returns root if the input is not an object', () => {
-      expect(Reward.isRewardJSONTest('invalidInput')).toEqual(['root']);
-      expect(Reward.isRewardJSONTest(1)).toEqual(['root']);
-      expect(Reward.isRewardJSONTest(true)).toEqual(['root']);
-      expect(Reward.isRewardJSONTest([])).toEqual(['root']);
-      expect(Reward.isRewardJSONTest(null)).toEqual(['root']);
+      expect(Reward.rewardJSONTest('invalidInput')).toEqual(['root']);
+      expect(Reward.rewardJSONTest(1)).toEqual(['root']);
+      expect(Reward.rewardJSONTest(true)).toEqual(['root']);
+      expect(Reward.rewardJSONTest([])).toEqual(['root']);
+      expect(Reward.rewardJSONTest(null)).toEqual(['root']);
     });
   });
 
